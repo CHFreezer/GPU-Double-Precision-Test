@@ -1,0 +1,25 @@
+﻿#pragma kernel CSMain
+
+struct Data_struct
+{
+    double a;
+    double b;
+    int _operator;
+};
+
+StructuredBuffer<Data_struct> inBuffer;
+RWStructuredBuffer<double> Result;
+
+[numthreads(1,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    if(inBuffer[id.x]._operator==1){
+        Result[id.x] = inBuffer[id.x].a+inBuffer[id.x].b;
+    }else if(inBuffer[id.x]._operator==2){
+        Result[id.x] = inBuffer[id.x].a-inBuffer[id.x].b;
+    }else if(inBuffer[id.x]._operator==3){
+        Result[id.x] = inBuffer[id.x].a*inBuffer[id.x].b;
+    }else if(inBuffer[id.x]._operator==4){
+        Result[id.x] = inBuffer[id.x].a/inBuffer[id.x].b;
+    }
+}
